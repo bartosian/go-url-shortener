@@ -1,9 +1,7 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"io"
 	"os"
 )
 
@@ -56,23 +54,55 @@ import (
 // 	nrlines++
 // }
 
+// func main() {
+// 	inputFile, inputError := os.Open("input.dat")
+// 	if inputError != nil {
+// 		fmt.Printf("An error occurred on opening the inputfile.\n" +
+// 			"Try open it and refactor.\n")
+// 		return
+// 	}
+
+// 	defer inputFile.Close()
+// 	inputReader := bufio.NewReader(inputFile)
+
+// 	for {
+// 		inputString, readerError := inputReader.ReadString('\n')
+// 		if readerError == io.EOF {
+// 			return
+// 		}
+
+// 		fmt.Printf("The input was: %s", inputString)
+// 	}
+// }
+
+// func main() {
+// 	inputFile := "products.txt"
+// 	buf, err := ioutil.ReadFile(inputFile)
+// 	if err != nil {
+// 		fmt.Printf(os.Stderr, "File Error: %s\n", err)
+// 	}
+// }
+
 func main() {
-	inputFile, inputError := os.Open("input.dat")
-	if inputError != nil {
-		fmt.Printf("An error occurred on opening the inputfile.\n" +
-			"Try open it and refactor.\n")
-		return
+	file, err := os.Open("products2.tx")
+	if err != nil {
+		panic(err)
 	}
-
-	defer inputFile.Close()
-	inputReader := bufio.NewReader(inputFile)
-
+	defer file.Close()
+	var col1, col2, col3 []string
 	for {
-		inputString, readerError := inputReader.ReadString('\n')
-		if readerError == io.EOF {
-			return
+		var v1, v2, v3 string
+		_, err := fmt.Fscanln(file, &v1, &v2, &v3)
+		if err != nil {
+			break
 		}
 
-		fmt.Printf("The input was: %s", inputString)
+		col1 = append(col1, v1)
+		col2 = append(col2, v2)
+		col3 = append(col3, v3)
 	}
+
+	fmt.Println(col1)
+	fmt.Println(col2)
+	fmt.Println(col3)
 }
